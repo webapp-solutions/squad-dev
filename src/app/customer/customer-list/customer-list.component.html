@@ -1,0 +1,210 @@
+<section class="content-header">
+  <h1>List Consumers</h1>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12" style="text-align: center;">
+      <div class="box">
+        <div class="box-body">
+
+          <div class="row">
+            <div class="col-md-4 box-header" style="float:right">
+              <form [formGroup]="reportType">
+
+                <div class="form-group">
+                  <label for="type" style="margin-right:10px ;">Type:</label>
+                  <div class="radio" style="display:inline-block; margin-right: 15px;">
+                    <label>
+                      <input type="radio" name="type" id="optionsRadios1" value="AadharCard" checked=""
+                        (change)="changeReport($event)">
+                      Aadhar Card
+                    </label>
+                  </div>
+                  <div class="radio" style="display: inline-block; margin-right: 15px;">
+                    <label>
+                      <input type="radio" name="type" id="optionsRadios2" value="Passport"
+                        (change)="changeReport($event)">
+                      Passport
+                    </label>
+                  </div>
+                  <div class="radio" style="display: inline-block; ">
+                    <label>
+                      <input type="radio" name="type" id="optionsRadios3" value="Compact"
+                        (change)="changeReport($event)">
+                      Compact
+                    </label>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+            <div class="col-md-12">
+              <hr class="section-title-line">
+            </div>
+          </div>
+
+          <!-- ############################## Aadhar Card View ############################## -->
+          <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap" [hidden]="!showAadharReport">
+
+            <table id="example1" datatable [dtOptions]="dtOptions1" [dtTrigger]="dtTrigger1"
+              class="row-border hover display stripe">
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Sr No.</th>
+                  <th style="text-align: center;">Name</th>
+                  <th style="text-align: center;">Aadhar Number</th>
+                  <th style="text-align: center;">Mobile</th>
+                  <th style="text-align: center;">DOB</th>
+                  <th style="text-align: center;">Group Code</th>
+                  <th style="text-align: center;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let c of aadharcustomers; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ c.aadharCard['name'] }} </td>
+                  <td>{{c.aadharCard['aadharNumber']}}</td>
+                  <td>{{ c.mobileNumber }}</td>
+                  <td>{{ c.aadharCard['dateOfBirth'] | date:'dd/MM/YYYY' }}</td>
+                  <td><span *ngFor="let g of c.groupCode;" class="badge bg-olive" style="margin-left:2px ;">
+                      {{ g['groupCode'] }}
+                    </span></td>
+                  <td>
+                    <button type="button" class="btn bg-primary btn-xs" data-toggle="modal" data-target="#exampleModal" (click)="open(c)"
+                      style="margin-right: 5px;"><i class="fa fa-eye"></i></button>
+                    <button type="button" class="btn bg-navy btn-xs" (click)="updateCustomer(c._id)"
+                      style="margin-right: 5px;"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger btn-xs" (click)="deleteCustomer(c)"><i
+                        class="fa fa-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+          <!-- ############################## Passport View ############################## -->
+          <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap" [hidden]="!showPassportReport">
+
+            <table id="example2" datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2"
+              class="row-border hover display stripe">
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Sr No.</th>
+                  <th style="text-align: center;">Given Name</th>
+                  <th style="text-align: center;">Surname</th>
+                  <th style="text-align: center;">Passport Number</th>
+                  <th style="text-align: center;">Mobile</th>
+                  <th style="text-align: center;">DOB</th>
+                  <th style="text-align: center;">DOE</th>
+                  <th style="text-align: center;">Group Code</th>
+                  <th style="text-align: center;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let c of passportCustomers; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ c.passport['givenName']}} </td>
+                  <td>{{c.passport['surname']}}</td>
+                  <td>{{c.passport['passportNumber']}}</td>
+                  <td>{{ c.mobileNumber }}</td>
+                  <td>{{ c.dateOfBirth | date:'dd/MM/YYYY' }}</td>
+                  <td>{{ c.passport['dateOfExpiry'] | date:'dd/MM/YYYY' }}</td>
+                  <td><span *ngFor="let g of c.groupCode;" class="badge bg-olive" style="margin-left:2px ;">
+                      {{ g['groupCode'] }}
+                    </span></td>
+                  <td>
+                    <button type="button" class="btn bg-primary btn-xs" data-toggle="modal" data-target="#exampleModal" (click)="open(c)"
+                    style="margin-right: 5px;"><i class="fa fa-eye"></i></button>
+                    <button type="button" class="btn bg-navy btn-xs" (click)="updateCustomer(c._id)"
+                      style="margin-right: 5px;"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger btn-xs" (click)="deleteCustomer(c)"><i
+                        class="fa fa-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+            <!-- ############################## Compact View ############################## -->
+            <div id="example3_wrapper" class="dataTables_wrapper form-inline dt-bootstrap" [hidden]="!showCompactReport">
+
+              <table id="example3" datatable [dtOptions]="dtOptions3" [dtTrigger]="dtTrigger3"
+                class="row-border hover display stripe">
+                <thead>
+                  <tr>
+                    <th style="text-align: center;">Sr No.</th>
+                    <th style="text-align: center;">First Name</th>
+                    <th style="text-align: center;">Last Name</th>
+                    <th style="text-align: center;">Mobile</th>
+                    <th style="text-align: center;">DOB</th>
+                    <th style="text-align: center;">DOA</th>
+                    <th style="text-align: center;">Aadhar Number</th>
+                    <th style="text-align: center;">Passport</th>
+                    <th style="text-align: center;">Group Code</th>
+                    <th style="text-align: center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let c of compactCustomers; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ c.firstName}} </td>
+                    <td>{{ c.lastName}} </td>
+                    <td>{{ c.mobileNumber }}</td>
+                    <td>{{ c.dateOfBirth | date:'dd/MM/YYYY' }}</td>
+                    <td>{{ c.dateOfAnniversary | date:'dd/MM/YYYY' }}</td>
+                    <td>{{c.aadharCard['aadharNumber']}}</td>
+                    <td>{{c.passport['passportNumber']}}</td>
+                    <td><span *ngFor="let g of c.groupCode;" class="badge bg-olive" style="margin-left:2px ;">
+                        {{ g['groupCode'] }}
+                      </span></td>
+                    <td>
+                      <button type="button" class="btn bg-primary btn-xs" data-toggle="modal" data-target="#exampleModal" (click)="open(c)"
+                      style="margin-right: 5px;"><i class="fa fa-eye"></i></button>
+                      <button type="button" class="btn bg-navy btn-xs" (click)="updateCustomer(c._id)"
+                        style="margin-right: 5px;"><i class="fa fa-edit"></i></button>
+                      <button type="button" class="btn btn-danger btn-xs" (click)="deleteCustomer(c)"><i
+                          class="fa fa-trash"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+  
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="display: inline-block; font-weight: 700;">{{ modalTitle }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row" style="text-align:center;">
+          <div class="col-sm-12" *ngFor="let i of imageUrls;">
+            <span>
+              <img src= "{{i}}" alt="{{modalTitle}}" class="img-thumbnail" style="margin-right:10px ;">
+              <a href="{{ i }}" target="_blank" class="btn btn-primary btn-xs"> <i class="fa fa-download"></i></a>
+            </span>
+              <!-- <img src= "{{imageUrl}}" alt="{{modalTitle}}" class="img-thumbnail"> -->
+          </div>
+          <span *ngIf="imageUrls.length == 0">
+            <i class="ion ion-alert-circled"></i>  Images not Uploaded
+          </span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+ng-select.custom {
+    border:0px;
+    min-height: 0px;
+    border-radius: 0;
+}
+ .ng-select-container  {            
+    min-height: 0px;
+    border-radius: 0 !important;
+    height: 34px !important;
+}

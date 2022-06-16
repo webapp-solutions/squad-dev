@@ -1,0 +1,169 @@
+<section class="content-header">
+  <h1>
+    Dashboard
+    <!-- <small>Control panel</small> -->
+  </h1>
+  <ol class="breadcrumb">
+    <!-- <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Dashboard</li> -->
+    <!-- <li> <i class="fa fa-warning"></i> Charts shows dummy values.</li> -->
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-aqua">
+        <div class="inner">
+          <h3>{{totalCustomers}}</h3>
+
+          <p>Customers</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-android-contact"></i>
+        </div>
+        <!-- <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a> -->
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>{{totalGroups}}</h3>
+
+          <p>Travel Groups</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-android-contacts"></i>
+        </div>
+        <!-- <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a> -->
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>{{totalPassports}}</h3>
+
+          <p>Passports</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-ios-bookmarks"></i>
+        </div>
+        <!-- <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a> -->
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h3>{{totalAadharCards}}</h3>
+
+          <p>Aadhar Cards</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-card"></i>
+        </div>
+        <!-- <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a> -->
+      </div>
+    </div>
+    <!-- ./col -->
+  </div>
+
+  <div class="row">
+    <section class="col-sm-6 connectedSortable ui-sortable">
+
+
+      <!-- TO DO List -->
+      <div class="box box-primary">
+        <div class="box-header ui-sortable-handle" style="cursor: move;">
+          <i class="ion ion-android-calendar"></i>
+
+          <h3 class="box-title">Today's Birthdays</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-striped" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Sr No.</th>
+                    <th style="text-align: center;">First Name</th>
+                    <th style="text-align: center;">Last Name</th>
+                    <th style="text-align: center;">DOB</th>
+                    <th style="text-align: center;">Mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of birthdays; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ c.firstName}} </td>
+                    <td>{{ c.lastName}} </td>
+                    <td>{{ c.dateOfBirth  | date:'dd/MM/YYYY'}} </td>
+                    <td>{{ c.mobileNumber}} </td>
+                </tr>
+                <tr *ngIf="birthdays.length == 0">
+                    <td align="center" colspan="5">No Birthdays</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <!-- /.box-body -->
+        <!-- <div class="box-footer clearfix no-border">
+          <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+        </div> -->
+      </div>
+      <!-- /.box -->
+
+    </section>
+
+    <section class="col-sm-6 connectedSortable ui-sortable">
+
+
+      <!-- TO DO List -->
+      <div class="box box-primary">
+        <div class="box-header ui-sortable-handle" style="cursor: move;">
+          <i class="ion ion-android-calendar"></i>
+
+          <h3 class="box-title">Today's Anniversaries</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-striped" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Sr No.</th>
+                    <th style="text-align: center;">First Name</th>
+                    <th style="text-align: center;">Last Name</th>
+                    <th style="text-align: center;">DOA</th>
+                    <th style="text-align: center;">Mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of anniversaries; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ c.firstName}} </td>
+                    <td>{{ c.lastName}} </td>
+                    <td>{{ c.dateOfAnniversary  | date:'dd/MM/YYYY'}} </td>
+                    <td>{{ c.mobileNumber}} </td>
+                </tr>
+                <tr *ngIf="anniversaries.length == 0">
+                    <td align="center" colspan="5">No Anniversaries</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <!-- /.box-body -->
+        <!-- <div class="box-footer clearfix no-border">
+          <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+        </div> -->
+      </div>
+      <!-- /.box -->
+
+    </section>
+    
+  </div>
+</section>

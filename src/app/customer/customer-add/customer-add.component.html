@@ -1,0 +1,361 @@
+<section class="content-header">
+  <h1>New Customer</h1>
+</section>
+
+<section class="content">
+  <div class="box box-primary">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="box-body">
+        <!-- ############# Basic Details ############# -->
+        <div class="row">
+          <div class="col-md-12 box-header">
+            <h3 class="box-title section-title">Basic Details</h3>
+            <hr class="section-title-line">
+          </div>
+          <div class="col-md-6">
+            <!-- ============ First Name ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.firstName.errors }">
+              <label for="firstName">First Name</label>
+              <input type="text" formControlName="firstName" class="form-control" id="firstName"
+                placeholder="First Name" tabindex="1" />
+              <span *ngIf="isSubmitted && f.firstName.errors" class="help-block">
+                <div *ngIf="f.firstName.errors.required">First Name is required</div>
+              </span>
+            </div>
+            
+            <!-- ============ Email ID ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.emailId.errors }">
+              <label for="emailId">Email ID</label>
+              <input type="text" formControlName="emailId" class="form-control" id="emailId" placeholder="Email ID"
+                tabindex="3" />
+              <span *ngIf="isSubmitted && f.emailId.errors" class="help-block">
+                <div *ngIf="f.emailId.errors.required">Email ID is required</div>
+              </span>
+            </div>
+
+            <!-- ============ Gender ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.gender.errors }">
+              <label for="gender">Gender</label>
+              <ng-select  class="custom" tabindex="5" [multiple]="false" placeholder="Select Gender" formControlName="gender"  >
+                <ng-option *ngFor="let g of genders" [value]="g.id">{{g.text}}</ng-option>
+             </ng-select>
+              <span *ngIf="isSubmitted && f.gender.errors" class="help-block">
+                <div *ngIf="f.gender.errors.required">Gender is required.</div>
+              </span>
+            </div>
+
+            <!-- ============ Date Of Birth ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.dateOfBirth.errors }">
+              <label for="dateOfBirth">Date Of Birth</label>
+              <input type="date" formControlName="dateOfBirth" class="form-control" id="dateOfBirth" tabindex="7" />
+
+              <!-- <span *ngIf="isSubmitted && f.dateOfBirth.errors" class="help-block">
+                  <div *ngIf="f.dateOfBirth.errors.required">Date of Birth is required</div>
+                </span> -->
+            </div>
+
+            <!-- ============ Profile Image ============ -->
+            <div class="form-group">
+              <label for="profileImage" style="display:block;">Profile Image</label>
+              <input type="file" (change)="selectImage($event)" id="profileImage" style="display:inline-block" formControlName="profileImage" class="form-control-file" tabindex="9">
+              <!-- <p class="help-block">Example block-level help text here.</p> -->
+              <span>
+                <button type="button" (click)="uploadProfileImage()" class="btn btn-xs btn-primary" [disabled]="!selectedProfileImage">
+                  <i class="fa fa-upload"></i> </button>
+                </span>
+                <span *ngIf="isProfileImageUploaded" >
+                  <i class="fa fa-check" style="font-size: 20px; color:green; margin-left: 45px;margin-right: 5px;"></i><b>Uploaded..!!!</b>
+                </span>
+            </div>
+            
+
+          </div>
+          <div class="col-md-6">
+            <!-- ============ Last Name ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.lastName.errors }">
+              <label for="lastName">Last Name</label>
+              <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Last Name"
+                tabindex="2" />
+              <span *ngIf="isSubmitted && f.lastName.errors" class="help-block">
+                <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+              </span>
+            </div>
+
+            <!-- ============ Mobile Number ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.mobileNumber.errors }">
+              <label for="mobileNumber">Mobile Number</label>
+              <input type="text" formControlName="mobileNumber" class="form-control" id="mobileNumber"
+                placeholder="Mobile Number" tabindex="4" />
+              <span *ngIf="isSubmitted && f.mobileNumber.errors" class="help-block">
+                <div *ngIf="f.mobileNumber.errors.required">Mobile Number is required</div>
+                <div *ngIf="f.mobileNumber.errors.pattern">Mobile Number must have 10 digits.</div>
+              </span>
+            </div>
+
+            <!-- ============ Group Code ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.groupCode.errors }">
+              <label for="groupCode">Group Code</label>
+              <ng-select class="custom"  [multiple]="true" placeholder="Select Group Code" formControlName="groupCode" tabindex="6" [hideSelected]="true">
+                <ng-option *ngFor="let g of groupList" [value]="g.id">{{g.text}}</ng-option>
+             </ng-select>
+              <span *ngIf="isSubmitted && f.groupCode.errors" class="help-block">
+                <div *ngIf="f.groupCode.errors.required">Group Code is required.</div>
+              </span>
+            </div>
+            
+            <!-- ============ Date Of Anniversary ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.dateOfAnniversary.errors }">
+              <label for="dateOfAnniversary">Date Of Anniversary</label>
+              <input type="date" formControlName="dateOfAnniversary" class="form-control" id="dateOfAnniversary"
+                tabindex="8" />
+
+              <!-- <span *ngIf="isSubmitted && f.dateOfAnniversary.errors" class="help-block">
+                  <div *ngIf="f.dateOfAnniversary.errors.required">Date of Birth is required</div>
+                </span> -->
+            </div>
+
+            <div class="checkbox" style="margin-top:45px;">
+              <label>
+                <input type="checkbox" formControlName="copyToAadhar" (change)="copyDetails($event)" tabindex="10"> <b>Copy Name to Aadhar Card</b>
+              </label>
+            </div>
+
+          </div>
+        </div>
+        <!-- ############# Aadhar Card Details ############# -->
+        <div class="row">
+          <div class="col-md-12 box-header">
+            <h3 class="box-title section-title">Aadhar Card Details</h3>
+            <hr class="section-title-line">
+          </div>
+          <div class="col-md-6">
+            <!-- ============ Aadhar Number ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.aadharNumber.errors }">
+              <label for="aadharNumber">Aadhar Number</label>
+              <input type="text" formControlName="aadharNumber" class="form-control" id="aadharNumber"
+                placeholder=" Aadhar Number" tabindex="11" />
+              <span *ngIf="isSubmitted && f.aadharNumber.errors" class="help-block">
+                <div *ngIf="f.aadharNumber.errors.required"> Aadhar Number is required</div>
+              </span>
+            </div>
+
+            <!-- ============ Address ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.address.errors }"
+              style="margin-bottom: 28px;">
+              <label for="address">Address</label>
+              <textarea rows="4" formControlName="address" class="form-control" id="address" placeholder="Address"
+                tabindex="13"></textarea>
+              <span *ngIf="isSubmitted && f.address.errors" class="help-block">
+                <div *ngIf="f.address.errors.required">Address is required.</div>
+                <div *ngIf="f.address.errors.pattern">Address must have only digits.</div>
+              </span>
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <!-- ============ Aadhar Name ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.aadharName.errors }">
+              <label for="aadharName">Aadhar Name</label>
+              <input type="text" formControlName="aadharName" class="form-control" id="aadharName"
+                placeholder=" Aadhar Name" tabindex="12" />
+              <span *ngIf="isSubmitted && f.aadharName.errors" class="help-block">
+                <div *ngIf="f.aadharName.errors.required"> Aadhar Name is required</div>
+              </span>
+            </div>
+            <!-- ============ Aadhar Front Image ============ -->
+            <div class="form-group">
+              <label for="aadharFrontImage" style="display:block;">Aadhar Front Image</label>
+              <input type="file" (change)="selectImage($event)" id="aadharFrontImage" style="display:inline-block" formControlName="aadharFrontImage" class="form-control-file" tabindex="14">
+              <!-- <p class="help-block">Example block-level help text here.</p> -->
+              <span>
+                <button type="button" (click)="uploadAadharFrontImage()" class="btn btn-xs btn-primary" [disabled]="!selectedAadharFront">
+                  <i class="fa fa-upload"></i></button>
+                </span>
+                <span *ngIf="isAadharFrontImageUploaded" >
+                  <i class="fa fa-check" style="font-size: 20px; color:green; margin-left: 45px;margin-right: 5px;"></i><b>Uploaded..!!!</b>
+                </span>
+            </div>
+            <!-- ============ Aadhar Back Image ============ -->
+            <div class="form-group">
+              <label for="aadharBackImage" style="display:block;">Aadhar Back Image</label>
+              <input type="file" (change)="selectImage($event)" id="aadharBackImage" formControlName="aadharBackImage" class="form-control-file" style="display:inline-block" 
+                tabindex="15">
+              <!-- <p class="help-block">Example block-level help text here.</p> -->
+              <span>
+                <button type="button" (click)="uploadAadharBackImage()" class="btn btn-xs btn-primary" [disabled]="!selectedAadharBack">
+                  <i class="fa fa-upload"></i></button>
+                </span>
+                <span *ngIf="isAadharBackImageUploaded" >
+                  <i class="fa fa-check" style="font-size: 20px; color:green; margin-left: 45px;margin-right: 5px;"></i><b>Uploaded..!!!</b>
+                </span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ############# Passport  Details ############# -->
+        <div class="row">
+          <div class="col-md-12 box-header">
+            <h3 class="box-title section-title">Passport Details</h3>
+            <hr class="section-title-line">
+          </div>
+          <div class="col-md-6">
+            <!-- ============ Passport Number ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.passportNumber.errors }">
+              <label for="passportNumber">Passport Number</label>
+              <input type="text" formControlName="passportNumber" class="form-control" id="passportNumber"
+                placeholder=" Passport Number" tabindex="16" />
+              <span *ngIf="isSubmitted && f.passportNumber.errors" class="help-block">
+                <div *ngIf="f.passportNumber.errors.required"> Passport Number is required</div>
+              </span>
+            </div>
+
+            <!-- ============ Surname ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.surname.errors }">
+              <label for="surname">Surname</label>
+              <input type="text" formControlName="surname" class="form-control" id="surname" placeholder=" Surname" tabindex="18"/>
+              <span *ngIf="isSubmitted && f.surname.errors" class="help-block">
+                <div *ngIf="f.surname.errors.required"> Surname is required</div>
+              </span>
+            </div>
+
+            <!-- ============ Date Of Issue ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.dateOfIssue.errors }">
+              <label for="dateOfIssue">Date Of Issue</label>
+              <input type="date" formControlName="dateOfIssue" class="form-control" id="dateOfIssue" tabindex="19" />
+
+              <!-- <span *ngIf="isSubmitted && f.dateOfIssue.errors" class="help-block">
+                  <div *ngIf="f.dateOfIssue.errors.required">Date of Birth is required</div>
+                </span> -->
+            </div>
+
+            <!-- ============ Date Of Expiry ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.dateOfExpiry.errors }">
+              <label for="dateOfExpiry">Date Of Expiry</label>
+              <input type="date" formControlName="dateOfExpiry" class="form-control" id="dateOfExpiry" tabindex="20" />
+
+              <!-- <span *ngIf="isSubmitted && f.dateOfExpiry.errors" class="help-block">
+                  <div *ngIf="f.dateOfExpiry.errors.required">Date of Expiry is required</div>
+                </span> -->
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <!-- ============ Given Name ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.givenName.errors }">
+              <label for="givenName">Given Name</label>
+              <input type="text" formControlName="givenName" class="form-control" id="givenName"
+                placeholder=" Given Name" tabindex="17" />
+              <span *ngIf="isSubmitted && f.givenName.errors" class="help-block">
+                <div *ngIf="f.givenName.errors.required"> Given Name is required</div>
+              </span>
+            </div>
+            <!-- ============ Passport Front Image ============ -->
+            <div class="form-group">
+              <label for="passportFrontImage" style="display:block;" >Passport Front Image</label>
+              <input type="file" id="passportFrontImage" (change)="selectImage($event)" formControlName="passportFrontImage" class="form-control-file" style="display:inline-block" tabindex="21">
+              <!-- <p class="help-block">Example block-level help text here.</p> -->
+              <span>
+                <button type="button" (click)="uploadPassportFrontImage()" class="btn btn-xs btn-primary" [disabled]="!selectedPassportFront">
+                  <i class="fa fa-upload"></i></button>
+                </span>
+                <span *ngIf="isPassportFrontImageUploaded" >
+                  <i class="fa fa-check" style="font-size: 20px; color:green; margin-left: 45px;margin-right: 5px;"></i><b>Uploaded..!!!</b>
+                </span>
+            </div>
+            <!-- ============ Passport Back Image ============ -->
+            <div class="form-group">
+              <label for="passportBackImage" style="display:block;">Passport Back Image</label>
+              <input type="file" id="passportBackImage" (change)="selectImage($event)" formControlName="passportBackImage" class="form-control-file" style="display:inline-block" tabindex="22">
+              <!-- <p class="help-block">Example block-level help text here.</p> -->
+              <span>
+                <button type="button" (click)="uploadPassportBackImage()" class="btn btn-xs btn-primary" [disabled]="!selectedPassportBack">
+                  <i class="fa fa-upload"></i></button>
+                </span>
+                <span *ngIf="isPassportBackImageUploaded" >
+                  <i class="fa fa-check" style="font-size: 20px; color:green; margin-left: 45px;margin-right: 5px;"></i><b>Uploaded..!!!</b>
+                </span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ############# GST Details ############# -->
+        <div class="row">
+          <div class="col-md-12 box-header">
+            <h3 class="box-title section-title">GST Details</h3>
+            <hr class="section-title-line">
+          </div>
+          <div class="col-md-6">
+            <!-- ============ Registration Number ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.registrationNumber.errors }">
+              <label for="registrationNumber">Registration Number</label>
+              <input type="text" formControlName="registrationNumber" class="form-control" id="registrationNumber"
+                placeholder=" Registration Number" tabindex="23"/>
+              <span *ngIf="isSubmitted && f.registrationNumber.errors" class="help-block">
+                <div *ngIf="f.registrationNumber.errors.required"> Registration Number is required</div>
+              </span>
+            </div>
+
+            <!-- ============ Company Address ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.companyAddress.errors }"
+              style="margin-bottom: 28px;">
+              <label for="companyAddress">Company Address</label>
+              <textarea rows="5" formControlName="companyAddress" class="form-control" id="companyAddress"
+                placeholder="Company Address" tabindex="25"></textarea>
+              <span *ngIf="isSubmitted && f.companyAddress.errors" class="help-block">
+                <div *ngIf="f.companyAddress.errors.required">Company Address is required.</div>
+
+              </span>
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <!-- ============ Company Name ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.companyName.errors }">
+              <label for="companyName">Company Name</label>
+              <input type="text" formControlName="companyName" class="form-control" id="companyName"
+                placeholder=" Company Name" tabindex="24"/>
+              <span *ngIf="isSubmitted && f.companyName.errors" class="help-block">
+                <div *ngIf="f.companyName.errors.required"> Company Name is required</div>
+              </span>
+            </div>
+
+            <!-- ============ GST Email ID ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.gstEmailId.errors }">
+              <label for="gstEmailId">Email ID</label>
+              <input type="text" formControlName="gstEmailId" class="form-control" id="gstEmailId"
+                placeholder="Email ID" tabindex="25"/>
+              <span *ngIf="isSubmitted && f.gstEmailId.errors" class="help-block">
+                <div *ngIf="f.gstEmailId.errors.required">Email ID is required</div>
+              </span>
+            </div>
+
+            <!-- ============ Phone Number ============ -->
+            <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.phoneNumber.errors }">
+              <label for="phoneNumber">Phone Number</label>
+              <input type="text" formControlName="phoneNumber" class="form-control" id="phoneNumber"
+                placeholder="Phone Number" tabindex="26"/>
+              <span *ngIf="isSubmitted && f.phoneNumber.errors" class="help-block">
+                <div *ngIf="f.phoneNumber.errors.required">Phone Number is required</div>
+                <div *ngIf="f.phoneNumber.errors.pattern">Mobile Number must have only digits.</div>
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="box-footer" style="text-align: center;">
+        <button type="button" (click)="onReset()" class="btn btn-primary" style="margin-right: 5px;" tabindex="27">
+          <i class="fa fa-refresh" style="margin-right: 4px;"></i>Reset </button>
+        <button type="submit" class="btn btn-success" [disabled]="disableSubmit" tabindex="28">
+          <i class="fa fa-send" style="margin-right: 4px;"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</section>

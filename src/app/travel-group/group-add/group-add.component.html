@@ -1,0 +1,129 @@
+<section class="content-header">
+    <h1>New Travel Group</h1>
+</section>
+
+<section class="content">
+    <div class="box box-primary">
+        <form [formGroup]="groupForm" (ngSubmit)="onSubmit()" autocomplete="off">
+            <div class="box-body">
+                <!-- ############# Basic Details ############# -->
+                <div class="row">
+                    <div class="col-md-12 box-header">
+                        <h3 class="box-title section-title">Group Details</h3>
+                        <hr class="section-title-line">
+                    </div>
+                    <div class="col-md-6">
+                        <!-- ============ Group Code ============ -->
+                        <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && f.groupCode.errors }">
+                            <label for="groupCode">Group Code</label>
+                            <input type="text" formControlName="groupCode" class="form-control" id="groupCode"
+                                placeholder="Group Code" tabindex="1" />
+                            <span *ngIf="isSubmitted && f.groupCode.errors" class="help-block">
+                                <div *ngIf="f.groupCode.errors.required">First Name is required</div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="text-align: center; padding: 21px;">
+
+                        <button type="submit" class="btn btn-success" [disabled]="disableSubmit" tabindex="28">
+                            <i class="fa fa-send" style="margin-right: 4px;"></i>Submit</button>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <label for="groupMembers">Group Members</label>
+                        <br>
+                        <span>
+                            <table class="table table-striped" style="text-align: center;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;">Sr No.</th>
+                                        <th style="text-align: center;">First Name</th>
+                                        <th style="text-align: center;">Last Name</th>
+                                        <th style="text-align: center;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let c of groupMembers; let i = index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ c.firstName}} </td>
+                                        <td>{{ c.lastName}} </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-xs"
+                                                style="margin-right: 5px;" (click)="removeMember(c)"><i
+                                                    class="fa fa-minus"></i></button>
+
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="groupMembers.length == 0">
+                                        <td align="center" colspan="4">No Group Members</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </span>
+                    </div>
+
+
+
+                </div>
+
+
+
+                <!-- ############################## Compact View ############################## -->
+                <div class="row">
+                    <div class="col-md-12 box-header">
+                        <h3 class="box-title section-title">Customers</h3>
+                        <hr class="section-title-line">
+                    </div>
+                </div>
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"
+                    style="text-align: center;">
+
+                    <table id="example1" datatable [dtOptions]="dtOptions1" [dtTrigger]="dtTrigger1"
+                        class="row-border hover display stripe">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">Sr No.</th>
+                                <th style="text-align: center;">First Name</th>
+                                <th style="text-align: center;">Last Name</th>
+                                <th style="text-align: center;">Mobile</th>
+                                <th style="text-align: center;">DOB</th>
+                                <th style="text-align: center;">DOA</th>
+                                <th style="text-align: center;">Aadhar Number</th>
+                                <th style="text-align: center;">Passport</th>
+                                <th style="text-align: center;">Group Code</th>
+                                <th style="text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of compactCustomers; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ c.firstName}} </td>
+                                <td>{{ c.lastName}} </td>
+                                <td>{{ c.mobileNumber }}</td>
+                                <td>{{ c.dateOfBirth | date:'dd/MM/YYYY' }}</td>
+                                <td>{{ c.dateOfAnniversary | date:'dd/MM/YYYY' }}</td>
+                                <td>{{c.aadharCard['aadharNumber']}}</td>
+                                <td>{{c.passport['passportNumber']}}</td>
+                                <td><span *ngFor="let g of c.groupCode;" class="badge bg-olive"
+                                        style="margin-left:2px ;">
+                                        {{ g['groupCode'] }}
+                                    </span></td>
+                                <td>
+                                    <button type="button" class="btn bg-navy btn-xs" style="margin-right: 5px;"
+                                        (click)="addMember(c)"><i class="fa fa-user-plus"></i></button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+
+            </div>
+        </form>
+
+
+    </div>
+</section>

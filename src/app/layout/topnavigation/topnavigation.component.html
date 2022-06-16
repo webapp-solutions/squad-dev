@@ -1,0 +1,80 @@
+<header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo" role="button" (click)="goHome()">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini">
+            <img src="../../../assets/images/Squad Logo PNG.png" alt="">
+          </span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg">
+            <!-- <b style="font-size: 13px; font-weight: 753;">Faizul Mawaid al Burhaniyah</b> -->
+            <img src="../../../assets/images/Squad Logo PNG.png" alt="">
+          </span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+    
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                  <img *ngIf="user.profileImage != ''" src="{{user.profileImage}}" class="user-image" alt="User Image">
+                  <img *ngIf="user.profileImage == ''" src="../../../assets/images/avatar5.png" class="user-image" alt="User Image">
+                  <!-- <span class="hidden-xs">{{currentUser.firstName}}</span> -->
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header" style="background-color: #1f4260 ;">
+                    <img *ngIf="user.profileImage != ''" src="{{user.profileImage}}" class="img-circle" alt="User Image">
+                    <img *ngIf="user.profileImage == ''" src="../../../assets/images/avatar5.png" class="img-circle" alt="User Image">
+    
+                    <p *ngIf="user"> 
+                      {{user.username | uppercase}}
+                      <br> 
+                      <small>{{user.role | uppercase}}</small>
+                    </p>
+                  </li>
+                  <!-- Menu Body -->
+                  <!-- <li class="user-body">
+                    <div class="row">
+                      <div class="col-xs-4 text-center">
+                        <a href="#">Followers</a>
+                      </div>
+                      <div class="col-xs-4 text-center">
+                        <a href="#">Sales</a>
+                      </div>
+                      <div class="col-xs-4 text-center">
+                        <a href="#">Friends</a>
+                      </div>
+                    </div>
+                  </li> -->
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <!-- <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    </div> -->
+                    <div class="pull-right">
+                      <button type="button" (click)="logout()" class="btn btn-danger btn-sm">
+                        <i class="fa  fa-sign-out"></i>Sign out</button>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <!-- Control Sidebar Toggle Button -->
+              <!-- <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+              </li> -->
+            </ul>
+          </div>
+        </nav>
+      </header>
